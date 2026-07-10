@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+:root {
+  --rk-green: #0d6e3f;
+  --rk-green-dark: #0a5730;
+  --rk-gold: #f3c31c;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Arabic", sans-serif;
+}
