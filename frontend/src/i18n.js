@@ -41,6 +41,21 @@ const resources = {
       loginButton: 'Se connecter',
       loginLoading: 'Connexion…',
       loginError: 'Identifiants incorrects.',
+      noAccount: 'Pas encore de compte ?',
+      createAccount: 'Créer un compte',
+      haveAccount: 'Vous avez déjà un compte ?',
+
+      // Inscription
+      registerTitle: 'Créer un compte',
+      registerSubtitle: 'Espace opérateur — dépôt de demandes d\'agrément',
+      nameLabel: 'Nom / Raison sociale',
+      phoneLabel: 'Téléphone',
+      passwordConfirmLabel: 'Confirmer le mot de passe',
+      passwordHint: 'Au moins 8 caractères.',
+      registerButton: 'Créer mon compte',
+      registering: 'Création…',
+      registerError: 'La création du compte a échoué.',
+      passwordMismatch: 'Les mots de passe ne correspondent pas.',
 
       // Portail opérateur
       portalTitle: 'Vos dossiers',
@@ -199,6 +214,21 @@ const resources = {
       loginButton: 'تسجيل الدخول',
       loginLoading: 'جارٍ الدخول…',
       loginError: 'بيانات الدخول غير صحيحة.',
+      noAccount: 'ليس لديك حساب؟',
+      createAccount: 'إنشاء حساب',
+      haveAccount: 'لديك حساب بالفعل؟',
+
+      // إنشاء حساب
+      registerTitle: 'إنشاء حساب',
+      registerSubtitle: 'فضاء المشغّل — تقديم طلبات الاعتماد',
+      nameLabel: 'الاسم / الاسم التجاري',
+      phoneLabel: 'الهاتف',
+      passwordConfirmLabel: 'تأكيد كلمة المرور',
+      passwordHint: '8 أحرف على الأقل.',
+      registerButton: 'إنشاء حسابي',
+      registering: 'جارٍ الإنشاء…',
+      registerError: 'فشل إنشاء الحساب.',
+      passwordMismatch: 'كلمتا المرور غير متطابقتين.',
 
       // بوابة المشغّل
       portalTitle: 'ملفاتك',

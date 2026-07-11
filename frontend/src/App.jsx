@@ -4,6 +4,7 @@ import { setLanguage } from './i18n'
 import Emblem from './components/Emblem'
 import Verify from './pages/Verify'
 import Login from './pages/Login'
+import Register from './pages/Register'
 import Applications from './pages/operator/Applications'
 import ApplicationDetail from './pages/operator/ApplicationDetail'
 import NewApplication from './pages/operator/NewApplication'
@@ -39,7 +40,10 @@ function Landing() {
           <Link to="/connexion" className="rk-btn rk-btn-primary rk-btn-block" style={{ textDecoration: 'none', padding: '12px' }}>
             {t('login')}
           </Link>
-          <Link to="/verifier" className="rk-btn rk-btn-ghost rk-btn-block" style={{ textDecoration: 'none', padding: '12px' }}>
+          <Link to="/inscription" className="rk-btn rk-btn-ghost rk-btn-block" style={{ textDecoration: 'none', padding: '12px' }}>
+            {t('createAccount')}
+          </Link>
+          <Link to="/verifier" style={{ textAlign: 'center', fontSize: '.86rem', color: 'var(--ink-soft)', marginTop: 4 }}>
             {t('verify')}
           </Link>
         </nav>
@@ -57,6 +61,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Landing />} />
       <Route path="/connexion" element={<Login />} />
+      <Route path="/inscription" element={<Register />} />
       <Route path="/verifier/:token?" element={<Verify />} />
       <Route
         path="/operateur"

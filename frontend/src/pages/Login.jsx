@@ -68,6 +68,10 @@ export default function Login() {
           <button type="submit" disabled={submitting || !email.trim() || !password} className="rk-btn rk-btn-primary rk-btn-block">
             {submitting ? t('loginLoading') : t('loginButton')}
           </button>
+
+          <p style={{ textAlign: 'center', fontSize: '.84rem', color: 'var(--ink-soft)' }}>
+            {t('noAccount')} <Link to="/inscription" style={{ color: 'var(--green-600)', fontWeight: 600 }}>{t('createAccount')}</Link>
+          </p>
         </form>
       </div>
     </div>
