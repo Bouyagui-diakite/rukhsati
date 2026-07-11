@@ -1,6 +1,20 @@
 import { Routes, Route, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { setLanguage } from './i18n'
+import Verify from './pages/Verify'
+import Login from './pages/Login'
+import Applications from './pages/operator/Applications'
+import ApplicationDetail from './pages/operator/ApplicationDetail'
+import NewApplication from './pages/operator/NewApplication'
+import Dashboard from './pages/backoffice/Dashboard'
+import ApplicationReview from './pages/backoffice/ApplicationReview'
+import Inspections from './pages/inspector/Inspections'
+import InspectionReport from './pages/inspector/InspectionReport'
+import { RequireAuth } from './auth'
+
+const OPERATOR = ['operator', 'admin']
+const BACKOFFICE = ['officer', 'director', 'admin']
+const INSPECTOR = ['inspector', 'admin']
 
 function Landing() {
   const { t, i18n } = useTranslation()
@@ -28,22 +42,40 @@ function Landing() {
   )
 }
 
-function Placeholder({ title }) {
-  return (
-    <div className="min-h-screen flex items-center justify-center text-gray-500">
-      {title} — en construction
-    </div>
-  )
-}
-
 export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
-      <Route path="/connexion" element={<Placeholder title="Connexion" />} />
-      <Route path="/verifier/:token?" element={<Placeholder title="Vérification d'agrément" />} />
-      <Route path="/operateur/*" element={<Placeholder title="Portail opérateur" />} />
-      <Route path="/ministere/*" element={<Placeholder title="Back-office ministère" />} />
+      <Route path="/connexion" element={<Login />} />
+      <Route path="/verifier/:token?" element={<Verify />} />
+      <Route
+        path="/operateur"
+        element={<RequireAuth roles={OPERATOR}><Applications /></RequireAuth>}
+      />
+      <Route
+        path="/operateur/nouveau"
+        element={<RequireAuth roles={OPERATOR}><NewApplication /></RequireAuth>}
+      />
+      <Route
+        path="/operateur/dossiers/:id"
+        element={<RequireAuth roles={OPERATOR}><ApplicationDetail /></RequireAuth>}
+      />
+      <Route
+        path="/ministere"
+        element={<RequireAuth roles={BACKOFFICE}><Dashboard /></RequireAuth>}
+      />
+      <Route
+        path="/ministere/dossiers/:id"
+        element={<RequireAuth roles={BACKOFFICE}><ApplicationReview /></RequireAuth>}
+      />
+      <Route
+        path="/inspecteur"
+        element={<RequireAuth roles={INSPECTOR}><Inspections /></RequireAuth>}
+      />
+      <Route
+        path="/inspecteur/dossiers/:id"
+        element={<RequireAuth roles={INSPECTOR}><InspectionReport /></RequireAuth>}
+      />
     </Routes>
   )
 }

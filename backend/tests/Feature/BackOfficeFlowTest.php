@@ -19,8 +19,11 @@ class BackOfficeFlowTest extends TestCase
     use RefreshDatabase;
 
     private User $operator;
+
     private User $officer;
+
     private User $inspector;
+
     private User $director;
 
     protected function setUp(): void
@@ -160,6 +163,55 @@ class BackOfficeFlowTest extends TestCase
 
         Sanctum::actingAs($this->director);
         $this->postJson("/api/applications/{$application->id}/decision/approve")->assertCreated();
+    }
+
+    public function test_inspectors_list_and_inspector_queue(): void
+    {
+        // La liste des inspecteurs est réservée au personnel.
+        Sanctum::actingAs($this->operator);
+        $this->getJson('/api/backoffice/inspectors')->assertForbidden();
+
+        Sanctum::actingAs($this->officer);
+        $this->getJson('/api/backoffice/inspectors')
+            ->assertOk()
+            ->assertJsonFragment(['id' => $this->inspector->id, 'name' => $this->inspector->name]);
+
+        // Amène un dossier hôtelier jusqu'à l'inspection planifiée.
+        $application = $this->submittedApplication('hotel');
+        $this->postJson("/api/applications/{$application->id}/review/start")->assertOk();
+        $this->approveAllDocuments($application);
+        Sanctum::actingAs($this->officer);
+        $this->postJson("/api/applications/{$application->id}/review/forward")->assertOk();
+        $this->postJson("/api/applications/{$application->id}/inspection/schedule", [
+            'inspector_id' => $this->inspector->id,
+            'scheduled_for' => now()->addDays(2)->toDateString(),
+        ])->assertOk();
+
+        // La file de l'inspecteur ne concerne que lui, et contient le dossier.
+        Sanctum::actingAs($this->officer);
+        $this->getJson('/api/inspector/inspections')->assertForbidden();
+
+        Sanctum::actingAs($this->inspector);
+        $this->getJson('/api/inspector/inspections')
+            ->assertOk()
+            ->assertJsonCount(1)
+            ->assertJsonPath('0.id', $application->id);
+    }
+
+    public function test_scheduling_inspection_rolls_back_when_transition_is_invalid(): void
+    {
+        // Dossier hôtelier resté au stade "soumis" : la transition vers
+        // Inspection n'est pas autorisée depuis ce statut, donc la
+        // planification doit échouer sans laisser d'inspection en base.
+        $application = $this->submittedApplication('hotel');
+
+        Sanctum::actingAs($this->officer);
+        $this->postJson("/api/applications/{$application->id}/inspection/schedule", [
+            'inspector_id' => $this->inspector->id,
+            'scheduled_for' => now()->addDays(2)->toDateString(),
+        ])->assertStatus(422);
+
+        $this->assertDatabaseMissing('inspections', ['application_id' => $application->id]);
     }
 
     public function test_rejection_requires_comment_and_is_final(): void

@@ -7,6 +7,7 @@ use App\Http\Controllers\BackOffice\DecisionController;
 use App\Http\Controllers\BackOffice\InspectionController;
 use App\Http\Controllers\BackOffice\ReviewController;
 use App\Http\Controllers\BackOffice\StatsController;
+use App\Http\Controllers\LicenseController;
 use App\Http\Controllers\LicenseTypeController;
 use App\Http\Controllers\VerificationController;
 use Illuminate\Support\Facades\Route;
@@ -50,8 +51,12 @@ Route::middleware('auth:sanctum')->group(function () {
         ->whereNumber('application');
 
     // Back-office : inspection
+    Route::get('/backoffice/inspectors', [InspectionController::class, 'inspectors']);
     Route::post('/applications/{application}/inspection/schedule', [ReviewController::class, 'scheduleInspection'])
         ->whereNumber('application');
+
+    // Portail inspecteur
+    Route::get('/inspector/inspections', [InspectionController::class, 'queue']);
     Route::post('/applications/{application}/inspection/report', [InspectionController::class, 'submitReport'])
         ->whereNumber('application');
 
@@ -59,6 +64,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/applications/{application}/decision/approve', [DecisionController::class, 'approve'])
         ->whereNumber('application');
     Route::post('/applications/{application}/decision/reject', [DecisionController::class, 'reject'])
+        ->whereNumber('application');
+
+    // Certificat d'agrément (PDF avec QR de vérification)
+    Route::get('/applications/{application}/license/pdf', [LicenseController::class, 'download'])
         ->whereNumber('application');
 
     Route::get('/backoffice/stats', [StatsController::class, 'index']);

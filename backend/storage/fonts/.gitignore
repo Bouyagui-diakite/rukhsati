@@ -1,0 +1,10 @@
+# Polices arabes du certificat PDF + cache de polices dompdf.
+# La police de DEV est une copie d'Arial (propriétaire Microsoft) : NE PAS
+# committer. En production, placer ici une police arabe libre (OFL), p. ex.
+# Amiri (Amiri-Regular.ttf) et sa variante bold, sous les noms attendus par
+# resources/views/licenses/certificate.blade.php :
+#   - arabic.ttf       (graisse normale)
+#   - arabic-bold.ttf  (graisse bold)
+# Une police OFL est redistribuable et peut, elle, être committée.
+*
+!.gitignore

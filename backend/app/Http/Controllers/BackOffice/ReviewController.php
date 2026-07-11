@@ -10,15 +10,14 @@ use App\Models\User;
 use App\Services\Workflow;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class ReviewController extends Controller
 {
-    public function __construct(private readonly Workflow $workflow)
-    {
-    }
+    public function __construct(private readonly Workflow $workflow) {}
 
     public function start(Request $request, Application $application): JsonResponse
     {
@@ -143,17 +142,22 @@ class ReviewController extends Controller
             ]);
         }
 
-        $application->inspection()->create([
-            'inspector_id' => $inspector->id,
-            'scheduled_for' => $data['scheduled_for'],
-        ]);
+        // Création de l'inspection et transition dans la même transaction :
+        // si la transition est refusée (statut de départ invalide), on ne
+        // laisse pas d'inspection orpheline en base.
+        DB::transaction(function () use ($application, $inspector, $data, $request) {
+            $application->inspection()->create([
+                'inspector_id' => $inspector->id,
+                'scheduled_for' => $data['scheduled_for'],
+            ]);
 
-        $this->workflow->transition(
-            $application,
-            ApplicationStatus::Inspection,
-            $request->user(),
-            "Inspection planifiée le {$data['scheduled_for']} ({$inspector->name})",
-        );
+            $this->workflow->transition(
+                $application,
+                ApplicationStatus::Inspection,
+                $request->user(),
+                "Inspection planifiée le {$data['scheduled_for']} ({$inspector->name})",
+            );
+        });
 
         return response()->json($application->fresh()->load('inspection'));
     }

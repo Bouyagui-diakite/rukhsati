@@ -33,9 +33,10 @@ class StatsController extends Controller
             'avg_processing_days' => $avgProcessingDays !== null ? round($avgProcessingDays, 1) : null,
             'by_type' => Application::whereNot('status', ApplicationStatus::Draft->value)
                 ->join('license_types', 'license_types.id', '=', 'applications.license_type_id')
-                ->selectRaw('license_types.name_fr as type, count(*) as total')
-                ->groupBy('license_types.name_fr')
-                ->pluck('total', 'type'),
+                ->selectRaw('license_types.name_fr, license_types.name_ar, count(*) as total')
+                ->groupBy('license_types.name_fr', 'license_types.name_ar')
+                ->orderByDesc('total')
+                ->get(),
         ]);
     }
 }
