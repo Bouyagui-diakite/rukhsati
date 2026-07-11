@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Enums\ApplicationStatus;
 use App\Models\Application;
 use App\Models\User;
+use App\Notifications\ApplicationStatusChanged;
 use DomainException;
 use Illuminate\Support\Facades\DB;
 
@@ -47,6 +48,14 @@ class Workflow
                 'to_status' => $to->value,
                 'comment' => $comment,
             ]);
+
+            // Tenir le titulaire informé de l'avancement de son dossier, sauf
+            // quand c'est lui-même qui a agi (soumission, resoumission).
+            if ($actor?->id !== $application->user_id) {
+                $application->user->notify(
+                    new ApplicationStatusChanged($application, $to, $comment, $actor)
+                );
+            }
 
             return $application;
         });

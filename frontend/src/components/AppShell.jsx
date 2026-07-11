@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useAuth } from '../auth'
 import { setLanguage } from '../i18n'
 import Emblem from './Emblem'
+import NotificationBell from './NotificationBell'
 
 const Icon = ({ d }) => (
   <svg className="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
@@ -80,6 +81,7 @@ export default function AppShell({ variant, eyebrow, title, subtitle, actions, c
         <div className="rk-whoami">
           <span className="av">{initials}</span>
           <span className="who"><b>{user?.name}</b><span>{ROLE_LABEL[user?.role] ?? ''}</span></span>
+          {variant === 'operator' && <span style={{ marginInlineStart: 'auto' }}><NotificationBell /></span>}
         </div>
 
         <div className="rk-rail-actions">

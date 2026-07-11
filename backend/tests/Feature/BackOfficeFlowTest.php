@@ -165,6 +165,46 @@ class BackOfficeFlowTest extends TestCase
         $this->postJson("/api/applications/{$application->id}/decision/approve")->assertCreated();
     }
 
+    public function test_operator_is_notified_when_staff_changes_status(): void
+    {
+        $application = $this->submittedApplication('travel_agency');
+
+        // Une action du guichet notifie le titulaire.
+        Sanctum::actingAs($this->officer);
+        $this->postJson("/api/applications/{$application->id}/review/start")->assertOk();
+
+        Sanctum::actingAs($this->operator);
+        $this->getJson('/api/notifications')
+            ->assertOk()
+            ->assertJsonPath('unread', 1)
+            ->assertJsonPath('items.0.data.reference', $application->reference)
+            ->assertJsonPath('items.0.data.to_status', ApplicationStatus::UnderReview->value);
+
+        // Marquer comme lue remet le compteur à zéro.
+        $id = $this->operator->notifications()->first()->id;
+        $this->postJson("/api/notifications/{$id}/read")->assertOk();
+        $this->getJson('/api/notifications')->assertJsonPath('unread', 0);
+    }
+
+    public function test_operator_is_not_notified_of_own_action(): void
+    {
+        $application = $this->submittedApplication('travel_agency');
+        Sanctum::actingAs($this->officer);
+        $this->postJson("/api/applications/{$application->id}/review/start")->assertOk();
+        $this->approveAllDocuments($application);
+        $this->postJson("/api/applications/{$application->id}/review/return", [
+            'comment' => 'Pièce à corriger.',
+        ])->assertOk();
+
+        // L'opérateur resoumet lui-même : cette transition ne doit pas
+        // générer de notification pour lui.
+        Sanctum::actingAs($this->operator);
+        $before = $this->operator->notifications()->count();
+        $this->postJson("/api/applications/{$application->id}/resubmit")->assertOk();
+
+        $this->assertSame($before, $this->operator->fresh()->notifications()->count());
+    }
+
     public function test_inspectors_list_and_inspector_queue(): void
     {
         // La liste des inspecteurs est réservée au personnel.

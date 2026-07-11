@@ -9,6 +9,7 @@ use App\Http\Controllers\BackOffice\ReviewController;
 use App\Http\Controllers\BackOffice\StatsController;
 use App\Http\Controllers\LicenseController;
 use App\Http\Controllers\LicenseTypeController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\VerificationController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,11 @@ Route::get('/verify/{token}', [VerificationController::class, 'show']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/auth/me', [AuthController::class, 'me']);
     Route::post('/auth/logout', [AuthController::class, 'logout']);
+
+    // Notifications in-app
+    Route::get('/notifications', [NotificationController::class, 'index']);
+    Route::post('/notifications/{id}/read', [NotificationController::class, 'markRead']);
+    Route::post('/notifications/read-all', [NotificationController::class, 'markAllRead']);
 
     // Parcours opérateur
     Route::get('/application-fields', [ApplicationController::class, 'fields']);
