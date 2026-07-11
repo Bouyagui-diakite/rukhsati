@@ -229,6 +229,19 @@ body {
 .rk-bar .track { grid-column: 1 / -1; height: 8px; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-pill); overflow: hidden; }
 .rk-bar .track > i { display: block; height: 100%; border-radius: var(--r-pill); }
 
+/* ---- Grille de formulaire ---- */
+.rk-form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.rk-form-grid .full { grid-column: 1 / -1; }
+@media (max-width: 620px) { .rk-form-grid { grid-template-columns: 1fr; } }
+
+/* ---- Renseignements en lecture seule ---- */
+.rk-info { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px 24px; }
+.rk-info .full { grid-column: 1 / -1; }
+.rk-info dt { font-size: .72rem; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-faint); margin: 0; }
+.rk-info dd { margin: 2px 0 0; font-size: .95rem; color: var(--ink); font-weight: 600; }
+.rk-info dd.empty { color: var(--ink-faint); font-weight: 400; font-style: italic; }
+@media (max-width: 620px) { .rk-info { grid-template-columns: 1fr; } }
+
 /* ---- Bande séparatrice ---- */
 .rk-band { display: flex; align-items: center; gap: 14px; margin: 42px 2px 16px; }
 .rk-band .lbl { font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; color: var(--ink-faint); }

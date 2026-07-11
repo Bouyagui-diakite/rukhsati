@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/auth/logout', [AuthController::class, 'logout']);
 
     // Parcours opérateur
+    Route::get('/application-fields', [ApplicationController::class, 'fields']);
     Route::apiResource('applications', ApplicationController::class)
         ->except('update')
         ->whereNumber('application');

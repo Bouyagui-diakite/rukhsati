@@ -10,10 +10,59 @@ use App\Services\Workflow;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class ApplicationController extends Controller
 {
+    /**
+     * Schéma des champs du formulaire de demande (piloté par la config).
+     */
+    public function fields(): JsonResponse
+    {
+        return response()->json(config('rukhsati.application_fields'));
+    }
+
+    /**
+     * Règles de validation dérivées du schéma pour form_data (partiel :
+     * chaque champ fourni est validé, mais aucun n'est requis — la
+     * complétude est exigée à la soumission).
+     */
+    private function formRules(): array
+    {
+        $rules = ['form_data' => ['required', 'array']];
+
+        foreach (config('rukhsati.application_fields') as $field) {
+            $rule = ['nullable'];
+
+            if (($field['type'] ?? 'text') === 'select') {
+                $rule[] = Rule::in(array_column($field['options'] ?? [], 'value'));
+            } else {
+                $rule[] = 'string';
+                $rule[] = 'max:'.($field['max'] ?? 255);
+                if (($field['type'] ?? '') === 'email') {
+                    $rule[] = 'email';
+                }
+            }
+
+            $rules['form_data.'.$field['key']] = $rule;
+        }
+
+        return $rules;
+    }
+
+    /**
+     * Renseignements obligatoires manquants dans form_data (libellés FR).
+     */
+    private function missingFormFields(?array $data): \Illuminate\Support\Collection
+    {
+        $data ??= [];
+
+        return collect(config('rukhsati.application_fields'))
+            ->filter(fn ($f) => ($f['required'] ?? false) && blank($data[$f['key']] ?? null))
+            ->pluck('label_fr')
+            ->values();
+    }
     public function index(Request $request): JsonResponse
     {
         $user = $request->user();
@@ -75,15 +124,13 @@ class ApplicationController extends Controller
     {
         Gate::authorize('update', $application);
 
-        if ($application->statusEnum() !== ApplicationStatus::Draft) {
+        if (! in_array($application->statusEnum(), [ApplicationStatus::Draft, ApplicationStatus::AwaitingDocuments], true)) {
             throw ValidationException::withMessages([
-                'status' => 'Seul un brouillon peut être modifié.',
+                'status' => 'Les renseignements ne sont modifiables que sur un brouillon ou un dossier renvoyé.',
             ]);
         }
 
-        $data = $request->validate([
-            'form_data' => ['required', 'array'],
-        ]);
+        $data = $request->validate($this->formRules());
 
         $application->update(['form_data' => $data['form_data']]);
 
@@ -102,6 +149,13 @@ class ApplicationController extends Controller
     public function submit(Request $request, Application $application, Workflow $workflow): JsonResponse
     {
         Gate::authorize('update', $application);
+
+        $missingFields = $this->missingFormFields($application->form_data);
+        if ($missingFields->isNotEmpty()) {
+            throw ValidationException::withMessages([
+                'form' => 'Renseignements obligatoires manquants : '.$missingFields->join(', '),
+            ]);
+        }
 
         $missing = $application->licenseType->requiredDocuments()
             ->where('mandatory', true)

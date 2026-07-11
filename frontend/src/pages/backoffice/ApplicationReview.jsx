@@ -6,6 +6,7 @@ import { useAuth } from '../../auth'
 import AppShell from '../../components/AppShell'
 import StatusBadge from '../../components/StatusBadge'
 import DocBadge from '../../components/DocBadge'
+import ApplicationForm from '../../components/ApplicationForm'
 
 function Section({ title, children }) {
   return (
@@ -88,6 +89,12 @@ export default function ApplicationReview() {
 
       {state.status === 'ok' && app && (
         <div style={{ maxWidth: 680 }}>
+          {app.form_data && Object.keys(app.form_data).length > 0 && (
+            <Section title={t('sectionInfo')}>
+              <ApplicationForm applicationId={app.id} initial={app.form_data} editable={false} />
+            </Section>
+          )}
+
           {app.documents?.length > 0 && (
             <Section title={t('sectionDocuments')}>
               {app.documents.map((doc) => (

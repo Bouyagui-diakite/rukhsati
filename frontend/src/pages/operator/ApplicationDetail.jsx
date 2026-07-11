@@ -5,6 +5,7 @@ import api from '../../api'
 import AppShell from '../../components/AppShell'
 import StatusBadge from '../../components/StatusBadge'
 import DocBadge from '../../components/DocBadge'
+import ApplicationForm from '../../components/ApplicationForm'
 
 const EDITABLE = ['draft', 'awaiting_documents']
 
@@ -110,6 +111,15 @@ export default function ApplicationDetail() {
 
       {state.status === 'ok' && app && (
         <div style={{ maxWidth: 680 }}>
+          <Section title={t('sectionInfo')}>
+            <ApplicationForm
+              applicationId={app.id}
+              initial={app.form_data ?? {}}
+              editable={editable}
+              onSaved={() => load()}
+            />
+          </Section>
+
           {license && (
             <Section title={t('sectionLicense')}>
               <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>

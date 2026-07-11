@@ -108,6 +108,14 @@ const resources = {
       submitApplication: 'Soumettre le dossier',
       submitting: 'Soumission…',
 
+      // Formulaire de demande
+      sectionInfo: 'Informations sur la demande',
+      saveInfo: 'Enregistrer les informations',
+      saving: 'Enregistrement…',
+      infoSaved: 'Informations enregistrées.',
+      optionalField: 'facultatif',
+      notProvided: 'Non renseigné',
+
       // Back-office ministère
       boTitle: 'Vérification des dossiers',
       boQueue: 'File des dossiers',
@@ -257,6 +265,14 @@ const resources = {
       uploadError: 'فشل إرسال الملف.',
       submitApplication: 'تقديم الملف',
       submitting: 'جارٍ التقديم…',
+
+      // استمارة الطلب
+      sectionInfo: 'معلومات الطلب',
+      saveInfo: 'حفظ المعلومات',
+      saving: 'جارٍ الحفظ…',
+      infoSaved: 'تم حفظ المعلومات.',
+      optionalField: 'اختياري',
+      notProvided: 'غير مُدخَل',
 
       // المكتب الخلفي للوزارة
       boTitle: 'التحقق من الملفات',

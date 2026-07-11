@@ -53,13 +53,31 @@ class ApplicationFlowTest extends TestCase
 
         $response = $this->postJson('/api/applications', [
             'license_type_id' => $type->id,
-            'form_data' => ['raison_sociale' => 'Sahara Tours SARL', 'rc' => '45812'],
         ])->assertCreated();
 
         $applicationId = $response->json('id');
         $this->assertSame(ApplicationStatus::Draft->value, $response->json('status'));
         $this->assertStringStartsWith('AGR-', $response->json('reference'));
 
+        // Soumettre sans renseignements ni pièces est refusé.
+        $this->postJson("/api/applications/{$applicationId}/submit")
+            ->assertUnprocessable();
+
+        // Renseignements obligatoires du formulaire (schéma piloté par la config).
+        $this->patchJson("/api/applications/{$applicationId}", [
+            'form_data' => [
+                'company_name' => 'Sahara Tours SARL',
+                'legal_form' => 'sarl',
+                'rc_number' => '45812',
+                'nif' => 'NIF-99001',
+                'manager_name' => 'Mohamed Ould Ahmed',
+                'phone' => '22233445',
+                'wilaya' => 'nkc_ouest',
+                'address' => 'Tevragh Zeina, Nouakchott',
+            ],
+        ])->assertOk();
+
+        // Renseignements complets mais pièces manquantes : toujours refusé.
         $this->postJson("/api/applications/{$applicationId}/submit")
             ->assertUnprocessable();
 
@@ -84,6 +102,40 @@ class ApplicationFlowTest extends TestCase
 
         $this->postJson("/api/applications/{$applicationId}/submit")
             ->assertUnprocessable();
+    }
+
+    public function test_application_fields_schema_is_exposed(): void
+    {
+        Sanctum::actingAs(User::factory()->create(['role' => 'operator']));
+
+        $this->getJson('/api/application-fields')
+            ->assertOk()
+            ->assertJsonFragment(['key' => 'company_name'])
+            ->assertJsonFragment(['key' => 'wilaya']);
+    }
+
+    public function test_form_data_is_validated_against_the_schema(): void
+    {
+        $operator = User::factory()->create(['role' => 'operator']);
+        Sanctum::actingAs($operator);
+        $type = LicenseType::where('code', 'travel_agency')->first();
+
+        $id = $this->postJson('/api/applications', ['license_type_id' => $type->id])->json('id');
+
+        // Une option de select hors liste est rejetée.
+        $this->patchJson("/api/applications/{$id}", [
+            'form_data' => ['company_name' => 'X SARL', 'wilaya' => 'atlantis'],
+        ])->assertUnprocessable()->assertJsonValidationErrors('form_data.wilaya');
+
+        // Un e-mail invalide est rejeté.
+        $this->patchJson("/api/applications/{$id}", [
+            'form_data' => ['email' => 'pas-un-email'],
+        ])->assertUnprocessable()->assertJsonValidationErrors('form_data.email');
+
+        // Des valeurs valides sont acceptées.
+        $this->patchJson("/api/applications/{$id}", [
+            'form_data' => ['company_name' => 'X SARL', 'wilaya' => 'adrar', 'email' => 'contact@x.mr'],
+        ])->assertOk();
     }
 
     public function test_operator_cannot_access_someone_elses_application(): void
