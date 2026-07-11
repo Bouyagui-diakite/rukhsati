@@ -17,6 +17,9 @@ const api = axios.create({ baseURL: '/api' })
 api.interceptors.request.use((config) => {
   const token = getToken()
   if (token) config.headers.Authorization = `Bearer ${token}`
+  // Langue courante → le backend renvoie ses messages (validation) dans la
+  // bonne langue (voir middleware SetLocale).
+  config.headers['X-Locale'] = localStorage.getItem('lang') || 'fr'
   return config
 })
 
