@@ -27,7 +27,7 @@ class ApplicationController extends Controller
         }
 
         return response()->json(
-            $query->with('licenseType:id,code,name_fr,name_ar')
+            $query->with(['licenseType:id,code,name_fr,name_ar', 'user:id,name'])
                 ->orderByDesc('created_at')
                 ->paginate(15)
         );

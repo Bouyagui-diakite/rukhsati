@@ -1,11 +1,319 @@
 @import "tailwindcss";
 
+/* =========================================================================
+   Rukhsati — système de design
+   Identité officielle mauritanienne : vert national + or de l'emblème.
+   Neutres chauds à biais vert. Thèmes clair et sombre (auto + data-theme).
+   ========================================================================= */
 :root {
-  --rk-green: #0d6e3f;
-  --rk-green-dark: #0a5730;
-  --rk-gold: #f3c31c;
+  --font-sans: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, "Noto Sans Arabic", "Noto Kufi Arabic", sans-serif;
+  --font-mono: "Cascadia Code", "SF Mono", "Consolas", ui-monospace, monospace;
+
+  --r: 9px; --r-sm: 6px; --r-pill: 999px;
+
+  /* Light */
+  --ground: #f4f6f1; --surface: #ffffff; --surface-2: #fafbf8;
+  --ink: #14211b; --ink-soft: #566458; --ink-faint: #93a096;
+  --line: #e6eae2; --line-strong: #d6ddce;
+  --green-900: #083f2a; --green-800: #0a4d31; --green-700: #0b5a37; --green-600: #10704a; --green-tint: #e9f0ea;
+  --gold: #c39a38; --gold-bright: #e0b84e; --gold-tint: #f5ecd4;
+  --warn: #a56a10; --warn-tint: #f6ecd6;
+  --danger: #a3271b; --danger-tint: #f5e0dc;
+  --info: #2c6a86; --info-tint: #dceaf0;
+  --ok: #10704a; --ok-tint: #e4efe7;
+  --shadow: 0 1px 2px rgba(20,33,27,.05), 0 14px 34px -20px rgba(20,33,27,.20);
+  --shadow-sm: 0 1px 2px rgba(20,33,27,.05);
+  --on-green-soft: rgba(255,255,255,.74); --on-green-line: rgba(255,255,255,.13); --on-green-active: rgba(255,255,255,.10);
+
+  /* Compat : anciennes variables encore utilisées par des écrans non migrés */
+  --rk-green: var(--green-700); --rk-green-dark: var(--green-900); --rk-gold: var(--gold);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ground: #0b120e; --surface: #131d16; --surface-2: #18231b;
+    --ink: #eef2ec; --ink-soft: #a6b5ab; --ink-faint: #77867c;
+    --line: #26332b; --line-strong: #33422f;
+    --green-900: #06160f; --green-800: #082014; --green-700: #0d3521; --green-600: #1a8a56; --green-tint: #15271c;
+    --gold: #d9b352; --gold-bright: #edc766; --gold-tint: #241f10;
+    --warn: #d29b3f; --warn-tint: #29200f;
+    --danger: #e3705f; --danger-tint: #2d1512;
+    --info: #6fb4d0; --info-tint: #10242c;
+    --ok: #4fb37c; --ok-tint: #112419;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 16px 40px -22px rgba(0,0,0,.7);
+    --shadow-sm: 0 1px 2px rgba(0,0,0,.35);
+    --on-green-soft: rgba(233,240,233,.66); --on-green-line: rgba(233,240,233,.09); --on-green-active: rgba(233,240,233,.07);
+  }
+}
+:root[data-theme="light"] {
+  --ground: #f4f6f1; --surface: #ffffff; --surface-2: #fafbf8;
+  --ink: #14211b; --ink-soft: #566458; --ink-faint: #93a096;
+  --line: #e6eae2; --line-strong: #d6ddce;
+  --green-900: #083f2a; --green-800: #0a4d31; --green-700: #0b5a37; --green-600: #10704a; --green-tint: #e9f0ea;
+  --gold: #c39a38; --gold-bright: #e0b84e; --gold-tint: #f5ecd4;
+  --warn: #a56a10; --warn-tint: #f6ecd6; --danger: #a3271b; --danger-tint: #f5e0dc;
+  --info: #2c6a86; --info-tint: #dceaf0; --ok: #10704a; --ok-tint: #e4efe7;
+  --shadow: 0 1px 2px rgba(20,33,27,.05), 0 14px 34px -20px rgba(20,33,27,.20);
+  --shadow-sm: 0 1px 2px rgba(20,33,27,.05);
+  --on-green-soft: rgba(255,255,255,.74); --on-green-line: rgba(255,255,255,.13); --on-green-active: rgba(255,255,255,.10);
+}
+:root[data-theme="dark"] {
+  --ground: #0b120e; --surface: #131d16; --surface-2: #18231b;
+  --ink: #eef2ec; --ink-soft: #a6b5ab; --ink-faint: #77867c;
+  --line: #26332b; --line-strong: #33422f;
+  --green-900: #06160f; --green-800: #082014; --green-700: #0d3521; --green-600: #1a8a56; --green-tint: #15271c;
+  --gold: #d9b352; --gold-bright: #edc766; --gold-tint: #241f10;
+  --warn: #d29b3f; --warn-tint: #29200f; --danger: #e3705f; --danger-tint: #2d1512;
+  --info: #6fb4d0; --info-tint: #10242c; --ok: #4fb37c; --ok-tint: #112419;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 16px 40px -22px rgba(0,0,0,.7);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.35);
+  --on-green-soft: rgba(233,240,233,.66); --on-green-line: rgba(233,240,233,.09); --on-green-active: rgba(233,240,233,.07);
 }
 
 body {
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Arabic", sans-serif;
+  margin: 0; background: var(--ground); color: var(--ink);
+  font-family: var(--font-sans); -webkit-font-smoothing: antialiased;
+}
+.rk-num { font-variant-numeric: tabular-nums; }
+.rk-mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+/* ---- Coquille : rail + contenu ---- */
+.rk-app { display: grid; grid-template-columns: 244px 1fr; min-height: 100vh; max-width: 1200px; margin: 0 auto; }
+.rk-rail {
+  background: linear-gradient(180deg, var(--green-900), #072414); color: #fff;
+  padding: 24px 16px; display: flex; flex-direction: column; gap: 28px;
+  position: sticky; top: 0; align-self: start; height: 100vh;
+}
+.rk-brand { display: flex; align-items: center; gap: 12px; }
+.rk-brand .rk-emblem { width: 38px; height: 38px; flex: none; }
+.rk-brand b { font-size: 1.16rem; font-weight: 800; letter-spacing: .2px; }
+.rk-brand .rk-brand-ar { display: block; font-size: .92rem; color: var(--on-green-soft); line-height: 1; margin-top: 1px; }
+.rk-nav { display: flex; flex-direction: column; gap: 3px; }
+.rk-nav a, .rk-nav button {
+  display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: var(--r-sm);
+  color: var(--on-green-soft); text-decoration: none; font-size: .84rem; font-weight: 500;
+  background: none; border: 0; width: 100%; cursor: pointer; font-family: inherit; text-align: start;
+  transition: background .12s, color .12s;
+}
+.rk-nav a:hover, .rk-nav button:hover { background: var(--on-green-active); color: #fff; }
+.rk-nav a.active { background: var(--on-green-active); color: #fff; box-shadow: inset 3px 0 0 var(--gold-bright); }
+.rk-nav .ic { width: 17px; height: 17px; flex: none; opacity: .85; }
+.rk-nav .rk-badge { margin-inline-start: auto; font-size: .72rem; font-weight: 800; background: var(--gold); color: var(--green-900); border-radius: var(--r-pill); padding: 1px 8px; }
+.rk-rail-spacer { margin-top: auto; }
+.rk-ministry { font-size: .72rem; color: var(--on-green-soft); border-top: 1px solid var(--on-green-line); padding-top: 14px; line-height: 1.5; }
+.rk-ministry .ar { display: block; margin-top: 2px; }
+.rk-whoami { display: flex; align-items: center; gap: 11px; margin-top: 14px; }
+.rk-whoami .av { width: 34px; height: 34px; border-radius: 50%; background: var(--gold); color: var(--green-900); display: grid; place-items: center; font-weight: 800; font-size: .82rem; flex: none; }
+.rk-whoami .who b { font-size: .84rem; display: block; line-height: 1.2; }
+.rk-whoami .who span { font-size: .72rem; color: var(--on-green-soft); }
+.rk-rail-actions { display: flex; gap: 8px; margin-top: 14px; }
+.rk-rail-actions button { flex: 1; font-size: .75rem; font-weight: 600; padding: 7px 8px; border-radius: var(--r-sm); border: 1px solid var(--on-green-line); background: var(--on-green-active); color: #fff; cursor: pointer; font-family: inherit; }
+.rk-rail-actions button:hover { background: rgba(255,255,255,.16); }
+
+.rk-main { padding: 34px clamp(20px, 1.2rem + 1.5vw, 40px) 64px; min-width: 0; }
+
+/* ---- En-tête de page ---- */
+.rk-topbar { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 26px; }
+.rk-eyebrow { font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); font-weight: 700; }
+.rk-h1 { margin: 6px 0 4px; font-size: clamp(1.6rem, 1.2rem + 1.5vw, 2.1rem); font-weight: 800; letter-spacing: -.015em; text-wrap: balance; }
+.rk-sub { color: var(--ink-soft); font-size: .84rem; }
+
+/* ---- Résumé sobre (bandeau de chiffres) ---- */
+.rk-summary { display: flex; gap: clamp(20px, 4vw, 52px); padding: 0 2px 24px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.rk-stat .v { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 1.9rem); font-weight: 800; letter-spacing: -.02em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.rk-stat .v .u { font-size: .9rem; font-weight: 600; color: var(--ink-soft); }
+.rk-stat .v em { font-style: normal; color: var(--danger); }
+.rk-stat .l { font-size: .84rem; color: var(--ink-soft); margin-top: 2px; }
+
+/* ---- Titre de section ---- */
+.rk-section-h { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 28px 2px 14px; }
+.rk-section-h h2 { margin: 0; font-size: 1.05rem; font-weight: 700; }
+.rk-section-h .hint { font-size: .84rem; color: var(--ink-faint); }
+
+/* ---- Carte ---- */
+.rk-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow-sm); overflow: hidden; }
+.rk-card-h { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+.rk-card-h h2 { margin: 0; font-size: 1.05rem; font-weight: 700; }
+.rk-card-b { padding: 16px; }
+
+/* ---- Lignes de liste (dossiers) ---- */
+.rk-row { display: flex; align-items: center; gap: 18px; padding: 16px 20px; border-bottom: 1px solid var(--line); transition: background .12s; text-decoration: none; color: inherit; }
+.rk-row:last-child { border-bottom: 0; }
+.rk-row:hover { background: var(--surface-2); }
+.rk-row.urgent { box-shadow: inset 3px 0 0 var(--danger); }
+.rk-row .body { flex: 1; min-width: 0; }
+.rk-row .line1 { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.rk-row .ref { font-family: var(--font-mono); font-size: .84rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.rk-row .who { font-weight: 700; font-size: 1.02rem; }
+.rk-row .line2 { color: var(--ink-soft); font-size: .84rem; margin-top: 3px; }
+.rk-row .line2 .sep { color: var(--ink-faint); margin: 0 8px; }
+.rk-row .actions { display: flex; align-items: center; gap: 8px; flex: none; }
+.rk-more { text-align: center; padding: 15px; }
+.rk-more a, .rk-more button { color: var(--green-600); font-weight: 600; font-size: .84rem; text-decoration: none; background: none; border: 0; cursor: pointer; font-family: inherit; }
+.rk-more a:hover, .rk-more button:hover { text-decoration: underline; }
+
+/* ---- Puce de statut ---- */
+.rk-chip { display: inline-flex; align-items: center; gap: 5px; font-size: .72rem; font-weight: 700; padding: 3px 10px; border-radius: var(--r-pill); white-space: nowrap; }
+.rk-chip .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+/* ---- Puce d'urgence / méta ---- */
+.rk-flag { font-size: .72rem; font-weight: 700; padding: 3px 10px; border-radius: var(--r-pill); white-space: nowrap; display: inline-flex; align-items: center; gap: 5px; }
+.rk-flag .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.rk-flag.late { color: var(--danger); background: var(--danger-tint); }
+.rk-flag.soon { color: var(--warn); background: var(--warn-tint); }
+.rk-flag.due { color: var(--ink-soft); }
+
+/* ---- Boutons ---- */
+.rk-btn { border: 0; border-radius: var(--r-sm); padding: 9px 15px; font-size: .84rem; font-weight: 700; cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 6px; transition: background .12s, border-color .12s, color .12s; }
+.rk-btn:disabled { opacity: .5; cursor: default; }
+.rk-btn .ic { width: 15px; height: 15px; }
+.rk-btn-primary { background: var(--green-700); color: #fff; }
+.rk-btn-primary:not(:disabled):hover { background: var(--green-600); }
+@media (prefers-color-scheme: dark) { .rk-btn-primary { background: var(--green-600); } .rk-btn-primary:not(:disabled):hover { background: #22a468; } }
+:root[data-theme="dark"] .rk-btn-primary { background: var(--green-600); }
+:root[data-theme="dark"] .rk-btn-primary:not(:disabled):hover { background: #22a468; }
+:root[data-theme="light"] .rk-btn-primary { background: var(--green-700); }
+.rk-btn-ghost { background: var(--surface); color: var(--ink-soft); border: 1px solid var(--line-strong); }
+.rk-btn-ghost:not(:disabled):hover { color: var(--ink); border-color: var(--ink-faint); }
+.rk-btn-danger { background: transparent; color: var(--ink-soft); border: 1px solid var(--line-strong); }
+.rk-btn-danger:not(:disabled):hover { color: var(--danger); border-color: var(--danger); background: var(--danger-tint); }
+.rk-btn-block { width: 100%; }
+.rk-btn-sm { padding: 5px 11px; font-size: .76rem; }
+.rk-btn-warn { background: transparent; color: var(--warn); border: 1px solid var(--warn); }
+.rk-btn-warn:not(:disabled):hover { background: var(--warn-tint); }
+
+/* ---- Bascule de langue ---- */
+.rk-lang { display: inline-flex; border: 1px solid var(--line-strong); border-radius: var(--r-pill); overflow: hidden; font-size: .72rem; font-weight: 700; background: var(--surface); }
+.rk-lang button { padding: 6px 13px; color: var(--ink-soft); background: none; border: 0; cursor: pointer; font-family: inherit; font-weight: 700; }
+.rk-lang button.on { background: var(--green-700); color: #fff; }
+
+/* ---- Carte sélectionnable (choix de type) ---- */
+.rk-choice { display: block; width: 100%; text-align: start; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; cursor: pointer; font-family: inherit; transition: border-color .12s, background .12s; }
+.rk-choice:hover { background: var(--surface-2); }
+.rk-choice.on { border-color: var(--green-600); box-shadow: 0 0 0 1px var(--green-600); background: var(--green-tint); }
+.rk-choice .top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.rk-choice .name { font-weight: 700; color: var(--ink); font-size: 1rem; }
+.rk-choice .radio { flex: none; width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--line-strong); margin-top: 2px; }
+.rk-choice.on .radio { border-color: var(--green-600); background: var(--green-600); box-shadow: inset 0 0 0 3px var(--surface); }
+.rk-choice .desc { margin-top: 6px; font-size: .86rem; color: var(--ink-soft); }
+.rk-choice .meta { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: .76rem; color: var(--ink-faint); }
+.rk-choice .meta b { color: var(--ink-soft); font-weight: 700; }
+
+/* ---- Champs de formulaire ---- */
+.rk-field { display: flex; flex-direction: column; gap: 6px; }
+.rk-label { font-size: .84rem; color: var(--ink-soft); font-weight: 600; }
+.rk-input, .rk-select, .rk-textarea {
+  width: 100%; border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink);
+  border-radius: var(--r-sm); padding: 9px 12px; font-size: .95rem; font-family: inherit;
+}
+.rk-input:focus, .rk-select:focus, .rk-textarea:focus { outline: none; border-color: var(--green-600); box-shadow: 0 0 0 3px var(--green-tint); }
+
+/* ---- Filtres (pilules) ---- */
+.rk-filters { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 14px; }
+.rk-pill { flex: none; font-size: .8rem; font-weight: 600; padding: 6px 12px; border-radius: var(--r-pill); border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink-soft); cursor: pointer; font-family: inherit; }
+.rk-pill:hover { color: var(--ink); }
+.rk-pill.on { background: var(--green-700); color: #fff; border-color: var(--green-700); }
+
+/* ---- Pagination ---- */
+.rk-pager { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 22px; }
+.rk-pager button { font-size: .9rem; padding: 5px 12px; border-radius: var(--r-sm); border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink); cursor: pointer; font-family: inherit; }
+.rk-pager button:disabled { opacity: .4; cursor: default; }
+.rk-pager .pg { font-size: .84rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+
+/* ---- Barres (répartition) ---- */
+.rk-bars { display: flex; flex-direction: column; gap: 12px; }
+.rk-bar { display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; align-items: center; }
+.rk-bar .bl { font-size: .84rem; color: var(--ink-soft); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rk-bar .bv { font-weight: 800; font-variant-numeric: tabular-nums; }
+.rk-bar .track { grid-column: 1 / -1; height: 8px; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-pill); overflow: hidden; }
+.rk-bar .track > i { display: block; height: 100%; border-radius: var(--r-pill); }
+
+/* ---- Bande séparatrice ---- */
+.rk-band { display: flex; align-items: center; gap: 14px; margin: 42px 2px 16px; }
+.rk-band .lbl { font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; color: var(--ink-faint); }
+.rk-band .ln { flex: 1; height: 1px; background: var(--line-strong); }
+
+/* ---- Barre de progression (pièces) ---- */
+.rk-pt { width: 84px; height: 6px; border-radius: var(--r-pill); background: var(--surface-2); border: 1px solid var(--line); overflow: hidden; flex: none; }
+.rk-pt > i { display: block; height: 100%; background: var(--green-600); }
+
+/* ---- Liste de définitions (fiche) ---- */
+.rk-dl { font-size: .9rem; display: flex; flex-direction: column; gap: 4px; }
+.rk-dl .kv { display: flex; gap: 8px; }
+.rk-dl dt { color: var(--ink-faint); margin: 0; }
+.rk-dl dd { color: var(--ink); font-weight: 600; margin: 0; }
+.rk-dl dd.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+/* ---- Pièces du dossier ---- */
+.rk-doc { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.rk-doc:first-child { padding-top: 0; }
+.rk-doc:last-child { border-bottom: 0; padding-bottom: 0; }
+.rk-doc .dl { min-width: 0; }
+.rk-doc .dn { font-size: .92rem; color: var(--ink); }
+.rk-doc .dm { font-size: .74rem; color: var(--ink-faint); margin-top: 2px; }
+.rk-doc .df { font-size: .78rem; color: var(--ink-soft); margin-top: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rk-doc .side { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex: none; }
+.rk-upload { cursor: pointer; font-size: .78rem; font-weight: 600; border: 1px solid var(--line-strong); border-radius: var(--r-sm); padding: 6px 12px; color: var(--ink-soft); background: var(--surface); display: inline-block; }
+.rk-upload:hover { color: var(--ink); border-color: var(--ink-faint); }
+.rk-upload.busy { opacity: .5; pointer-events: none; }
+
+/* ---- Chronologie ---- */
+.rk-tl { list-style: none; margin: 0; padding: 0; margin-inline-start: 8px; border-inline-start: 1px solid var(--line-strong); }
+.rk-tl li { margin-inline-start: 16px; padding-bottom: 16px; position: relative; }
+.rk-tl li:last-child { padding-bottom: 0; }
+.rk-tl .mk { position: absolute; inset-inline-start: -21px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--line-strong); }
+.rk-tl .top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.rk-tl .when { font-size: .72rem; color: var(--ink-faint); font-variant-numeric: tabular-nums; }
+.rk-tl .cmt { margin-top: 5px; font-size: .88rem; color: var(--ink); }
+.rk-tl .by { font-size: .72rem; color: var(--ink-faint); margin-top: 2px; }
+
+/* ---- État vide / chargement ---- */
+.rk-empty { border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); padding: 44px 20px; text-align: center; color: var(--ink-soft); }
+.rk-note { border-radius: var(--r-sm); padding: 12px 14px; font-size: .88rem; }
+.rk-note.err { background: var(--danger-tint); color: var(--danger); }
+.rk-note.warn { background: var(--warn-tint); color: var(--warn); }
+
+/* ---- Pages publiques (carte centrée) ---- */
+.rk-public { min-height: 100vh; background: var(--ground); display: flex; flex-direction: column; align-items: center; padding: 40px 16px; }
+.rk-public-top { width: 100%; max-width: 460px; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+.rk-back { font-size: .84rem; color: var(--ink-soft); text-decoration: none; }
+.rk-back:hover { color: var(--ink); }
+.rk-public-card { width: 100%; max-width: 460px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); overflow: hidden; }
+.rk-public-head { background: linear-gradient(180deg, var(--green-800), var(--green-900)); color: #fff; padding: 20px; display: flex; align-items: center; gap: 13px; }
+.rk-public-head .rk-emblem { width: 36px; height: 36px; flex: none; }
+.rk-public-head h1 { margin: 0; font-size: 1.16rem; font-weight: 800; }
+.rk-public-head p { margin: 2px 0 0; font-size: .8rem; color: var(--on-green-soft); }
+.rk-public-body { padding: 22px 20px; }
+
+/* ---- Résultat de vérification ---- */
+.rk-vrow { padding: 12px 0; border-bottom: 1px solid var(--line); }
+.rk-vrow:last-child { border-bottom: 0; padding-bottom: 0; }
+.rk-vrow dt { font-size: .7rem; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-faint); margin: 0; }
+.rk-vrow dd { margin: 2px 0 0; font-size: 1rem; font-weight: 700; color: var(--ink); }
+
+/* ---- Landing ---- */
+.rk-landing { min-height: 100vh; display: flex; flex-direction: column; background:
+  radial-gradient(1200px 500px at 50% -10%, var(--green-tint), transparent), var(--ground); }
+.rk-landing-top { display: flex; justify-content: flex-end; padding: 18px 22px; }
+.rk-landing-hero { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px 20px 70px; gap: 8px; }
+.rk-landing-hero .rk-emblem { width: 74px; height: 74px; }
+.rk-landing-hero h1 { margin: 14px 0 0; font-size: clamp(2.4rem, 1.8rem + 3vw, 3.6rem); font-weight: 800; letter-spacing: -.02em; color: var(--green-600); }
+@media (prefers-color-scheme: dark) { .rk-landing-hero h1 { color: #37b579; } }
+:root[data-theme="dark"] .rk-landing-hero h1 { color: #37b579; }
+:root[data-theme="light"] .rk-landing-hero h1 { color: var(--green-600); }
+.rk-landing-hero .ar { font-size: 1.4rem; color: var(--gold); font-weight: 700; }
+.rk-landing-hero .tagline { color: var(--ink-soft); max-width: 30ch; margin-top: 8px; }
+.rk-landing-cta { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 300px; margin-top: 26px; }
+.rk-landing-foot { text-align: center; padding: 18px; font-size: .78rem; color: var(--ink-faint); border-top: 1px solid var(--line); }
+
+@media (max-width: 860px) {
+  .rk-app { grid-template-columns: 1fr; }
+  .rk-rail { position: static; height: auto; flex-direction: row; align-items: center; flex-wrap: wrap; gap: 12px 18px; }
+  .rk-rail .rk-nav, .rk-rail .rk-ministry, .rk-rail .rk-rail-spacer { display: none; }
+  .rk-rail .rk-whoami, .rk-rail .rk-rail-actions { margin: 0; }
+  .rk-rail-actions { margin-inline-start: auto; }
+  .rk-row { flex-wrap: wrap; }
+  .rk-row .actions { width: 100%; }
+  .rk-main { padding: 24px 16px 50px; }
 }

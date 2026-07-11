@@ -1,6 +1,7 @@
 import { Routes, Route, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { setLanguage } from './i18n'
+import Emblem from './components/Emblem'
 import Verify from './pages/Verify'
 import Login from './pages/Login'
 import Applications from './pages/operator/Applications'
@@ -18,26 +19,35 @@ const INSPECTOR = ['inspector', 'admin']
 
 function Landing() {
   const { t, i18n } = useTranslation()
+  const isRtl = i18n.language === 'ar'
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center gap-6 bg-gray-50 px-4">
-      <button
-        className="self-end text-sm border rounded-full px-4 py-1 text-gray-600"
-        onClick={() => setLanguage(i18n.language === 'fr' ? 'ar' : 'fr')}
-      >
-        {i18n.language === 'fr' ? 'العربية' : 'Français'}
-      </button>
-      <h1 className="text-4xl font-semibold" style={{ color: 'var(--rk-green)' }}>
-        {t('appName')}
-      </h1>
-      <p className="text-gray-600 text-center">{t('ministry')}</p>
-      <nav className="flex flex-col gap-3 w-full max-w-xs">
-        <Link to="/connexion" className="text-center text-white rounded-lg py-3" style={{ background: 'var(--rk-green)' }}>
-          {t('login')}
-        </Link>
-        <Link to="/verifier" className="text-center border rounded-lg py-3 text-gray-700">
-          {t('verify')}
-        </Link>
-      </nav>
+    <div className="rk-landing">
+      <div className="rk-landing-top">
+        <span className="rk-lang">
+          <button className={!isRtl ? 'on' : ''} onClick={() => setLanguage('fr')}>FR</button>
+          <button className={isRtl ? 'on' : ''} onClick={() => setLanguage('ar')}>ع</button>
+        </span>
+      </div>
+
+      <div className="rk-landing-hero">
+        <Emblem className="rk-emblem" />
+        <h1>{t('appName')}</h1>
+        <span className="ar" dir="rtl" lang="ar">رخصتي</span>
+        <p className="tagline">{t('ministry')}</p>
+
+        <nav className="rk-landing-cta">
+          <Link to="/connexion" className="rk-btn rk-btn-primary rk-btn-block" style={{ textDecoration: 'none', padding: '12px' }}>
+            {t('login')}
+          </Link>
+          <Link to="/verifier" className="rk-btn rk-btn-ghost rk-btn-block" style={{ textDecoration: 'none', padding: '12px' }}>
+            {t('verify')}
+          </Link>
+        </nav>
+      </div>
+
+      <div className="rk-landing-foot">
+        Ministère du Commerce et du Tourisme · <span dir="rtl" lang="ar">وزارة التجارة والسياحة</span>
+      </div>
     </div>
   )
 }
