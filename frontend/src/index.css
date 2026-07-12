@@ -349,27 +349,85 @@ body {
 .rk-vrow dt { font-size: .7rem; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-faint); margin: 0; }
 .rk-vrow dd { margin: 2px 0 0; font-size: 1rem; font-weight: 700; color: var(--ink); }
 
-/* ---- Landing ---- */
-.rk-landing { min-height: 100vh; display: flex; flex-direction: column; background:
-  radial-gradient(1200px 500px at 50% -10%, var(--green-tint), transparent), var(--ground); }
-.rk-landing-top { display: flex; justify-content: flex-end; padding: 18px 22px; }
-.rk-landing-hero { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px 20px 70px; gap: 8px; }
-.rk-landing-hero .rk-emblem { width: 74px; height: 74px; }
-.rk-landing-hero h1 { margin: 14px 0 0; font-size: clamp(2.4rem, 1.8rem + 3vw, 3.6rem); font-weight: 800; letter-spacing: -.02em; color: var(--green-600); }
-@media (prefers-color-scheme: dark) { .rk-landing-hero h1 { color: #37b579; } }
-:root[data-theme="dark"] .rk-landing-hero h1 { color: #37b579; }
-:root[data-theme="light"] .rk-landing-hero h1 { color: var(--green-600); }
-.rk-landing-hero .ar { font-size: 1.4rem; color: var(--gold); font-weight: 700; }
-.rk-landing-hero .tagline { color: var(--ink-soft); max-width: 30ch; margin-top: 8px; }
-.rk-landing-cta { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 300px; margin-top: 26px; }
-.rk-landing-foot { text-align: center; padding: 18px; font-size: .78rem; color: var(--ink-faint); border-top: 1px solid var(--line); }
+/* ---- Landing (vitrine publique) ---- */
+.rk-landing { min-height: 100vh; display: flex; flex-direction: column; }
+.rk-lp-wrap { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 clamp(18px, 4vw, 32px); }
+
+/* En-tête public */
+.rk-lp-header { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(8px);
+  background: color-mix(in srgb, var(--ground) 80%, transparent); border-bottom: 1px solid var(--line); }
+.rk-lp-header .bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; }
+.rk-lp-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
+.rk-lp-brand .rk-emblem { width: 30px; height: 30px; }
+.rk-lp-brand b { font-size: 1.1rem; font-weight: 800; }
+.rk-lp-nav { display: flex; align-items: center; gap: 10px; }
+
+/* Hero */
+.rk-lp-hero { text-align: center; padding: clamp(48px, 8vw, 96px) 0 clamp(36px, 6vw, 64px);
+  background: radial-gradient(1000px 460px at 50% -20%, var(--green-tint), transparent); }
+.rk-lp-hero .emblem-lg { width: clamp(56px, 10vw, 76px); height: clamp(56px, 10vw, 76px); margin-bottom: 18px; }
+.rk-lp-hero h1 { margin: 0 auto; max-width: 18ch; font-size: clamp(1.9rem, 1.3rem + 3.2vw, 3.2rem); font-weight: 800; letter-spacing: -.02em; line-height: 1.12; text-wrap: balance; color: var(--ink); }
+.rk-lp-hero .sub { margin: 18px auto 0; max-width: 56ch; color: var(--ink-soft); font-size: clamp(.98rem, .9rem + .4vw, 1.15rem); line-height: 1.6; }
+.rk-lp-hero .cta { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 30px; }
+.rk-lp-hero .cta .rk-btn { padding: 12px 22px; font-size: .95rem; }
+.rk-lp-hero .signin { margin-top: 16px; font-size: .86rem; color: var(--ink-soft); }
+.rk-lp-hero .signin a { color: var(--green-600); font-weight: 600; }
+
+/* Section générique */
+.rk-lp-section { padding: clamp(40px, 7vw, 72px) 0; }
+.rk-lp-section h2 { text-align: center; margin: 0 auto 8px; max-width: 22ch; font-size: clamp(1.4rem, 1.1rem + 1.4vw, 2rem); font-weight: 800; letter-spacing: -.01em; text-wrap: balance; }
+.rk-lp-eyebrow { display: block; text-align: center; font-size: .74rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 10px; }
+
+/* Étapes */
+.rk-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 34px; }
+.rk-step { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 24px 20px; box-shadow: var(--shadow-sm); position: relative; }
+.rk-step .n { position: absolute; top: 18px; inset-inline-end: 20px; font-size: 2.4rem; font-weight: 800; color: var(--green-tint); line-height: 1; font-variant-numeric: tabular-nums; }
+.rk-step .ic { width: 40px; height: 40px; border-radius: var(--r-sm); background: var(--green-tint); color: var(--green-600); display: grid; place-items: center; margin-bottom: 14px; }
+.rk-step .ic svg { width: 22px; height: 22px; }
+.rk-step h3 { margin: 0 0 6px; font-size: 1.05rem; font-weight: 700; }
+.rk-step p { margin: 0; color: var(--ink-soft); font-size: .9rem; line-height: 1.55; }
+
+/* Bandeau vérification */
+.rk-verify-banner { background: linear-gradient(135deg, var(--green-900), var(--green-700)); color: #fff; border-radius: var(--r); padding: clamp(26px, 4vw, 40px); display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; box-shadow: var(--shadow); }
+.rk-verify-banner .txt { max-width: 56ch; }
+.rk-verify-banner h2 { text-align: start; color: #fff; margin: 0 0 8px; max-width: none; }
+.rk-verify-banner p { margin: 0; color: var(--on-green-soft); line-height: 1.6; }
+.rk-verify-banner .qr-ic { width: 84px; height: 84px; flex: none; opacity: .95; }
+.rk-verify-banner .rk-btn { flex: none; background: var(--gold); color: var(--green-900); }
+.rk-verify-banner .rk-btn:hover { background: var(--gold-bright); }
+
+/* Deux publics */
+.rk-audiences { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 30px; }
+.rk-aud { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 22px; }
+.rk-aud b { display: block; font-size: 1.02rem; margin-bottom: 4px; }
+.rk-aud p { margin: 0; color: var(--ink-soft); font-size: .9rem; }
+
+/* Pied public */
+.rk-lp-foot { border-top: 1px solid var(--line); padding: 26px 0; text-align: center; color: var(--ink-faint); font-size: .82rem; }
+.rk-lp-foot .ar { margin-inline-start: 8px; }
+
+@media (max-width: 760px) {
+  .rk-steps { grid-template-columns: 1fr; }
+  .rk-audiences { grid-template-columns: 1fr; }
+  .rk-verify-banner { flex-direction: column; align-items: flex-start; text-align: start; }
+  .rk-verify-banner .qr-ic { display: none; }
+}
 
 @media (max-width: 860px) {
   .rk-app { grid-template-columns: 1fr; }
-  .rk-rail { position: static; height: auto; flex-direction: row; align-items: center; flex-wrap: wrap; gap: 12px 18px; }
-  .rk-rail .rk-nav, .rk-rail .rk-ministry, .rk-rail .rk-rail-spacer { display: none; }
-  .rk-rail .rk-whoami, .rk-rail .rk-rail-actions { margin: 0; }
-  .rk-rail-actions { margin-inline-start: auto; }
+  /* Le rail devient une barre supérieure : marque + identité + actions sur une
+     ligne, puis la navigation en dessous, horizontale et défilable. */
+  .rk-rail { position: static; height: auto; padding: 12px 16px; gap: 12px;
+    flex-direction: row; flex-wrap: wrap; align-items: center; }
+  .rk-rail .rk-brand { margin-inline-end: auto; }
+  .rk-rail .rk-ministry, .rk-rail .rk-rail-spacer { display: none; }
+  .rk-rail .rk-whoami { margin: 0; }
+  .rk-rail .rk-whoami .who { display: none; } /* garder l'avatar, cacher le détail */
+  .rk-rail .rk-rail-actions { margin: 0; }
+  .rk-rail .rk-nav { order: 3; flex-basis: 100%; flex-direction: row; flex-wrap: nowrap;
+    overflow-x: auto; gap: 4px; padding-bottom: 2px; }
+  .rk-rail .rk-nav a { white-space: nowrap; flex: none; }
+  .rk-rail .rk-nav a.active { box-shadow: inset 0 -3px 0 var(--gold-bright); } /* soulignement au lieu du bord latéral */
   .rk-row { flex-wrap: wrap; }
   .rk-row .actions { width: 100%; }
   .rk-main { padding: 24px 16px 50px; }
