@@ -15,11 +15,16 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\VerificationController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/auth/register', [AuthController::class, 'register']);
-Route::post('/auth/login', [AuthController::class, 'login']);
+// Limite les tentatives d'authentification (anti brute-force) : 5 essais par
+// minute et par IP. La route de vérification publique (QR) est aussi bornée.
+Route::middleware('throttle:5,1')->group(function () {
+    Route::post('/auth/register', [AuthController::class, 'register']);
+    Route::post('/auth/login', [AuthController::class, 'login']);
+});
 
 Route::get('/license-types', [LicenseTypeController::class, 'index']);
-Route::get('/verify/{token}', [VerificationController::class, 'show']);
+Route::get('/verify/{token}', [VerificationController::class, 'show'])
+    ->middleware('throttle:30,1'); // borne l'énumération de jetons
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/auth/me', [AuthController::class, 'me']);
