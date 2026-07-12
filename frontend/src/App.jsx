@@ -14,6 +14,8 @@ import Inspections from './pages/inspector/Inspections'
 import InspectionReport from './pages/inspector/InspectionReport'
 import LicenseTypes from './pages/admin/LicenseTypes'
 import LicenseTypeEdit from './pages/admin/LicenseTypeEdit'
+import Users from './pages/admin/Users'
+import UserEdit from './pages/admin/UserEdit'
 import { RequireAuth } from './auth'
 
 const OPERATOR = ['operator', 'admin']
@@ -105,6 +107,18 @@ export default function App() {
       <Route
         path="/admin/types/:id"
         element={<RequireAuth roles={ADMIN}><LicenseTypeEdit /></RequireAuth>}
+      />
+      <Route
+        path="/admin/utilisateurs"
+        element={<RequireAuth roles={ADMIN}><Users /></RequireAuth>}
+      />
+      <Route
+        path="/admin/utilisateurs/nouveau"
+        element={<RequireAuth roles={ADMIN}><UserEdit /></RequireAuth>}
+      />
+      <Route
+        path="/admin/utilisateurs/:id"
+        element={<RequireAuth roles={ADMIN}><UserEdit /></RequireAuth>}
       />
     </Routes>
   )

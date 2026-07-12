@@ -16,6 +16,7 @@ const ICONS = {
   plus: <Icon d={<><path d="M12 5v14M5 12h14" strokeLinecap="round" /></>} />,
   grid: <Icon d={<><path d="M4 5h16M4 12h16M4 19h10" strokeLinecap="round" /></>} />,
   search: <Icon d={<><circle cx="11" cy="11" r="7" /><path d="M21 21l-4-4" strokeLinecap="round" /></>} />,
+  users: <Icon d={<><circle cx="9" cy="8" r="3.2" /><path d="M3.5 20c0-3 2.5-5 5.5-5s5.5 2 5.5 5" /><path d="M16 5.5a3 3 0 0 1 0 5.5M17 20c0-2.4-1-4-2.5-4.6" strokeLinecap="round" /></>} />,
 }
 
 const NAV = {
@@ -31,6 +32,7 @@ const NAV = {
   ],
   admin: (t) => [
     { to: '/admin', label: t('adminTypesTitle'), icon: ICONS.grid, end: true },
+    { to: '/admin/utilisateurs', label: t('adminUsersTitle'), icon: ICONS.users },
     { to: '/ministere', label: t('boQueue'), icon: ICONS.files },
   ],
 }

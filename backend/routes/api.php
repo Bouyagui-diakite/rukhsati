@@ -7,6 +7,7 @@ use App\Http\Controllers\BackOffice\DecisionController;
 use App\Http\Controllers\BackOffice\InspectionController;
 use App\Http\Controllers\BackOffice\ReviewController;
 use App\Http\Controllers\Admin\LicenseTypeController as AdminLicenseTypeController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\BackOffice\StatsController;
 use App\Http\Controllers\LicenseController;
 use App\Http\Controllers\LicenseTypeController;
@@ -84,5 +85,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('admin')->prefix('admin')->group(function () {
         Route::apiResource('license-types', AdminLicenseTypeController::class)
             ->whereNumber('license_type');
+        Route::apiResource('users', AdminUserController::class)
+            ->only(['index', 'store', 'update', 'destroy'])
+            ->whereNumber('user');
     });
 });

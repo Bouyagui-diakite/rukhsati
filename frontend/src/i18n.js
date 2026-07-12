@@ -197,6 +197,23 @@ const resources = {
       typeSaved: 'Type enregistré.',
       backToTypes: 'Retour aux types',
 
+      // Administration — utilisateurs
+      adminUsersTitle: 'Utilisateurs',
+      newUser: 'Nouvel utilisateur',
+      editUser: "Modifier l'utilisateur",
+      createUser: 'Créer un utilisateur',
+      roleLabel: 'Rôle',
+      role_operator: 'Opérateur',
+      role_officer: 'Agent de guichet',
+      role_inspector: 'Inspecteur',
+      role_director: 'Directeur',
+      role_admin: 'Administrateur',
+      passwordKeep: 'Laisser vide pour ne pas changer',
+      saveUser: 'Enregistrer',
+      deleteUser: 'Supprimer',
+      confirmDeleteUser: 'Supprimer définitivement cet utilisateur ?',
+      you: 'Vous',
+
       // Planification & portail inspecteur
       actionSchedule: "Planifier l'inspection",
       inspectorLabel: 'Inspecteur',
@@ -405,6 +422,23 @@ const resources = {
       confirmDeleteType: 'حذف هذا النوع نهائيًا؟',
       typeSaved: 'تم حفظ النوع.',
       backToTypes: 'العودة إلى الأنواع',
+
+      // الإدارة — المستخدمون
+      adminUsersTitle: 'المستخدمون',
+      newUser: 'مستخدم جديد',
+      editUser: 'تعديل المستخدم',
+      createUser: 'إنشاء مستخدم',
+      roleLabel: 'الدور',
+      role_operator: 'مشغّل',
+      role_officer: 'موظف شباك',
+      role_inspector: 'معاين',
+      role_director: 'مدير',
+      role_admin: 'مسؤول',
+      passwordKeep: 'اتركه فارغًا لعدم التغيير',
+      saveUser: 'حفظ',
+      deleteUser: 'حذف',
+      confirmDeleteUser: 'حذف هذا المستخدم نهائيًا؟',
+      you: 'أنت',
 
       // برمجة المعاينة وبوابة المعاين
       actionSchedule: 'برمجة المعاينة',
