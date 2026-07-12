@@ -61,7 +61,21 @@ class LicensePdf
             'verificationUrl' => $url,
             'qr' => $this->qrCode($url),
             'ar' => $this->arabicStrings($license, $status),
+            'seal' => $this->seal(),
         ])->setPaper('a4')->output();
+    }
+
+    /**
+     * Armoiries officielles en data-URI, embarquées dans le certificat.
+     */
+    private function seal(): ?string
+    {
+        $path = resource_path('images/armoiries.png');
+        if (! is_file($path)) {
+            return null;
+        }
+
+        return 'data:image/png;base64,'.base64_encode(file_get_contents($path));
     }
 
     /**

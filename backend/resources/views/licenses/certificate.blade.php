@@ -45,7 +45,10 @@
         .header .ministry { font-size: 10.5px; margin-top: 4px; text-transform: uppercase; }
         .header .ministry.ar { font-size: 12px; text-transform: none; }
 
-        .title { text-align: center; margin: 20px 0 4px; }
+        .seal-wrap { text-align: center; margin-top: 14px; }
+        .seal { width: 62px; height: 62px; }
+
+        .title { text-align: center; margin: 12px 0 4px; }
         .title h1 { font-size: 24px; letter-spacing: 4px; color: #0b3d2e; }
         .title .title-ar { font-family: 'arabic', sans-serif; font-size: 20px; color: #0b3d2e; margin-top: 2px; }
         .title .subtitle { font-size: 10px; color: #666; letter-spacing: 2px; text-transform: uppercase; margin-top: 2px; }
@@ -89,6 +92,10 @@
             </td>
         </tr>
     </table>
+
+    @if(!empty($seal))
+        <div class="seal-wrap"><img src="{{ $seal }}" class="seal" alt=""></div>
+    @endif
 
     <div class="title">
         <h1>AGRÉMENT</h1>

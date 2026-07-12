@@ -57,7 +57,6 @@ function Landing() {
 
       <section className="rk-lp-hero">
         <div className="rk-lp-wrap">
-          <Emblem className="emblem-lg" />
           <h1>{t('heroTitle')}</h1>
           <p className="sub">{t('heroSubtitle')}</p>
           <div className="cta">
