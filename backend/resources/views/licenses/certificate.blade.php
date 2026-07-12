@@ -144,7 +144,7 @@
             <td>
                 <div class="field">
                     <div class="label ar">{{ $ar['issuedLabel'] }}</div>
-                    <div class="value ar">{{ $license->issued_at->format('d/m/Y') }}</div>
+                    <div class="value ar">{{ $ar['issuedDate'] }}</div>
                 </div>
             </td>
         </tr>
@@ -158,7 +158,7 @@
             <td>
                 <div class="field">
                     <div class="label ar">{{ $ar['expiresLabel'] }}</div>
-                    <div class="value ar">{{ $license->expires_at->format('d/m/Y') }}</div>
+                    <div class="value ar">{{ $ar['expiresDate'] }}</div>
                 </div>
             </td>
         </tr>

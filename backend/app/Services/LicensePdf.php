@@ -133,6 +133,9 @@ class LicensePdf
             'typeName' => $this->ar($license->licenseType->name_ar),
             'statusValue' => $this->ar($this->statusLabelAr($status)),
             'verifyHint' => $this->ar('امسح هذا الرمز للتحقق من صحة الرخصة'),
+            // Dates en chiffres arabes-orientaux pour la colonne arabe.
+            'issuedDate' => $this->arabicDigits($license->issued_at->format('d/m/Y')),
+            'expiresDate' => $this->arabicDigits($license->expires_at->format('d/m/Y')),
         ];
     }
 
@@ -143,6 +146,17 @@ class LicensePdf
     private function ar(string $text): string
     {
         return $this->arabic->utf8Glyphs($text, 200, false);
+    }
+
+    /**
+     * Convertit les chiffres occidentaux (0-9) en chiffres arabes-orientaux.
+     */
+    private function arabicDigits(string $text): string
+    {
+        return strtr($text, [
+            '0' => '٠', '1' => '١', '2' => '٢', '3' => '٣', '4' => '٤',
+            '5' => '٥', '6' => '٦', '7' => '٧', '8' => '٨', '9' => '٩',
+        ]);
     }
 
     private function statusLabelAr(LicenseStatus $status): string
