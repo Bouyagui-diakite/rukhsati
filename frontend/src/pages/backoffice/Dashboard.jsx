@@ -40,7 +40,9 @@ export default function Dashboard() {
   const isDirector = ['director', 'admin'].includes(user?.role)
 
   const [stats, setStats] = useState(null)
-  const [filter, setFilter] = useState('')
+  // Le directeur atterrit sur ses dossiers à trancher ; l'agent voit toute la
+  // file. (RequireAuth garantit que `user` est chargé avant ce rendu.)
+  const [filter, setFilter] = useState(isDirector ? 'awaiting_decision' : '')
   const [page, setPage] = useState(1)
   const [queue, setQueue] = useState({ status: 'loading' })
 
@@ -86,7 +88,11 @@ export default function Dashboard() {
       </section>
 
       <div className="rk-section-h">
-        <h2>{t('boQueue')}</h2>
+        <h2>{isDirector ? t('boDirQueue') : t('boQueue')}</h2>
+        {isDirector && filter === 'awaiting_decision' && (
+          <button className="hint" style={{ background: 'none', border: 0, color: 'var(--green-600)', cursor: 'pointer', fontWeight: 600, fontSize: '.84rem' }}
+            onClick={() => { setFilter(''); setPage(1) }}>{t('boDirAll')} →</button>
+        )}
       </div>
 
       <div className="rk-filters">
@@ -98,7 +104,9 @@ export default function Dashboard() {
 
       {queue.status === 'loading' && <p style={{ color: 'var(--ink-soft)' }}>{t('loadingApplications')}</p>}
       {queue.status === 'error' && <p className="rk-note warn">{t('verifyError')}</p>}
-      {queue.status === 'ok' && rows.length === 0 && <div className="rk-empty">{t('emptyApplications')}</div>}
+      {queue.status === 'ok' && rows.length === 0 && (
+        <div className="rk-empty">{isDirector && filter === 'awaiting_decision' ? t('boDirEmpty') : t('emptyApplications')}</div>
+      )}
 
       {queue.status === 'ok' && rows.length > 0 && (
         <div className="rk-card">
