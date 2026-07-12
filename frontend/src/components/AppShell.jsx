@@ -87,7 +87,6 @@ export default function AppShell({ variant, eyebrow, title, subtitle, actions, c
         <div className="rk-whoami">
           <span className="av">{initials}</span>
           <span className="who"><b>{user?.name}</b><span>{ROLE_LABEL[user?.role] ?? ''}</span></span>
-          {variant === 'operator' && <span style={{ marginInlineStart: 'auto' }}><NotificationBell /></span>}
         </div>
 
         <div className="rk-rail-actions">
@@ -103,7 +102,12 @@ export default function AppShell({ variant, eyebrow, title, subtitle, actions, c
             <h1 className="rk-h1">{title}</h1>
             {subtitle && <span className="rk-sub">{subtitle}</span>}
           </div>
-          {actions && <div>{actions}</div>}
+          {(actions || variant === 'operator') && (
+            <div className="rk-topbar-actions">
+              {actions}
+              {variant === 'operator' && <NotificationBell />}
+            </div>
+          )}
         </div>
         {children}
       </main>
