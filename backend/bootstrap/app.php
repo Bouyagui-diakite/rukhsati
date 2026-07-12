@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\EnsureAdmin;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -15,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         // Applique la langue de l'utilisateur (X-Locale) aux réponses API.
         $middleware->appendToGroup('api', SetLocale::class);
+        $middleware->alias(['admin' => EnsureAdmin::class]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(function (DomainException $e, $request) {

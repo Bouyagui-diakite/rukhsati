@@ -29,6 +29,10 @@ const NAV = {
   inspector: (t) => [
     { to: '/inspecteur', label: t('inspectorTitle'), icon: ICONS.search, end: true },
   ],
+  admin: (t) => [
+    { to: '/admin', label: t('adminTypesTitle'), icon: ICONS.grid, end: true },
+    { to: '/ministere', label: t('boQueue'), icon: ICONS.files },
+  ],
 }
 
 const ROLE_LABEL = {

@@ -63,6 +63,7 @@ export function useAuth() {
 export function homePathFor(user) {
   if (user?.role === 'operator') return '/operateur'
   if (user?.role === 'inspector') return '/inspecteur'
+  if (user?.role === 'admin') return '/admin'
   return '/ministere'
 }
 

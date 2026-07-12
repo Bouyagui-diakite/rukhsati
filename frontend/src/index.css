@@ -263,6 +263,29 @@ body {
 .rk-info dd.empty { color: var(--ink-faint); font-weight: 400; font-style: italic; }
 @media (max-width: 620px) { .rk-info { grid-template-columns: 1fr; } }
 
+/* ---- Interrupteur (booléen) ---- */
+.rk-switch { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; font-size: .9rem; color: var(--ink); }
+.rk-switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+.rk-switch .track { width: 38px; height: 22px; border-radius: var(--r-pill); background: var(--line-strong); position: relative; transition: background .15s; flex: none; }
+.rk-switch .track::after { content: ''; position: absolute; top: 2px; inset-inline-start: 2px; width: 18px; height: 18px; border-radius: 50%; background: #fff; transition: transform .15s; box-shadow: 0 1px 2px rgba(0,0,0,.25); }
+.rk-switch input:checked + .track { background: var(--green-600); }
+.rk-switch input:checked + .track::after { transform: translateX(16px); }
+[dir="rtl"] .rk-switch input:checked + .track::after { transform: translateX(-16px); }
+.rk-switch input:focus-visible + .track { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* ---- Éditeur de pièces (admin) ---- */
+.rk-doc-edit { border: 1px solid var(--line); border-radius: var(--r-sm); padding: 12px; margin-bottom: 10px; background: var(--surface-2); }
+.rk-doc-edit .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.rk-doc-edit .grid .full { grid-column: 1 / -1; }
+.rk-doc-edit .foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 10px; flex-wrap: wrap; }
+.rk-doc-edit .rm { background: none; border: 0; color: var(--danger); font-size: .8rem; font-weight: 600; cursor: pointer; font-family: inherit; }
+@media (max-width: 620px) { .rk-doc-edit .grid { grid-template-columns: 1fr; } }
+
+/* ---- Chip état (actif/inactif) ---- */
+.rk-state { font-size: .72rem; font-weight: 700; padding: 3px 10px; border-radius: var(--r-pill); }
+.rk-state.on { color: var(--ok); background: var(--ok-tint); }
+.rk-state.off { color: var(--ink-soft); background: var(--surface-2); border: 1px solid var(--line); }
+
 /* ---- Bande séparatrice ---- */
 .rk-band { display: flex; align-items: center; gap: 14px; margin: 42px 2px 16px; }
 .rk-band .lbl { font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; color: var(--ink-faint); }

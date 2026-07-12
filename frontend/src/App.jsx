@@ -12,11 +12,14 @@ import Dashboard from './pages/backoffice/Dashboard'
 import ApplicationReview from './pages/backoffice/ApplicationReview'
 import Inspections from './pages/inspector/Inspections'
 import InspectionReport from './pages/inspector/InspectionReport'
+import LicenseTypes from './pages/admin/LicenseTypes'
+import LicenseTypeEdit from './pages/admin/LicenseTypeEdit'
 import { RequireAuth } from './auth'
 
 const OPERATOR = ['operator', 'admin']
 const BACKOFFICE = ['officer', 'director', 'admin']
 const INSPECTOR = ['inspector', 'admin']
+const ADMIN = ['admin']
 
 function Landing() {
   const { t, i18n } = useTranslation()
@@ -90,6 +93,18 @@ export default function App() {
       <Route
         path="/inspecteur/dossiers/:id"
         element={<RequireAuth roles={INSPECTOR}><InspectionReport /></RequireAuth>}
+      />
+      <Route
+        path="/admin"
+        element={<RequireAuth roles={ADMIN}><LicenseTypes /></RequireAuth>}
+      />
+      <Route
+        path="/admin/types/nouveau"
+        element={<RequireAuth roles={ADMIN}><LicenseTypeEdit /></RequireAuth>}
+      />
+      <Route
+        path="/admin/types/:id"
+        element={<RequireAuth roles={ADMIN}><LicenseTypeEdit /></RequireAuth>}
       />
     </Routes>
   )
